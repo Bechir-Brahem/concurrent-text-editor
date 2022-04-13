@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tp sys rep</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="stomp.js"></script>
+</head>
+<style>
+    body {
+        display: flex;
+        background-color: #444444;
+    }
+
+    .fancy {
+        background-color: dimgrey;
+        border: black 3px solid;
+        border-radius: 3px;
+        margin: 5%;
+        width: 40%;
+        height: 60vh;
+    }
+
+    form {
+        width: 100%;
+        height: 100%;
+    }
+
+    textarea {
+        width: 100%;
+        height: 100%;
+        background-color: cadetblue;
+        font-size: 30px;
+    }
+</style>
+<body>
+<div class="fancy">
+    <textarea autocomplete="off" id="message">type message...</textarea>
+</div>
+<div class="fancy" id="second" style="overflow: scroll;">
+    <div id="screen"></div>
+</div>
+</body>
+<script>
+    const screen = document.getElementById('screen')
+    const text_field = document.getElementById('message')
+
+    append_to_screen = (msg) => screen.innerHTML += ('<div>' + msg + '</div>')
+
+    function send_message() {
+        client.send('/topic/test', {}, text_field.value);
+    }
+
+    text_field.addEventListener('input', (evt) => {
+        send_message();
+
+    })
+    var ws = new WebSocket('ws://ml-server.westeurope.cloudapp.azure.com:15674/ws');
+    var client = Stomp.over(ws);
+
+
+    var on_connect = function () {
+        console.log('connected');
+        id = client.subscribe("/topic/test", function (d) {
+            text_field.value = (d.body)
+        });
+    };
+
+    var on_error = function () {
+        console.log('error');
+    };
+    client.connect('bb', 'bb', on_connect, on_error, '/');
+    client.debug = append_to_screen
+
+</script>
+</html>
