@@ -1,3 +1,11 @@
+http://ml-server.westeurope.cloudapp.azure.com:12333/  
+open multiple tabs for more fun
+
+rabbitmq server is deployed on azure VM and it communicates with websockets with clien's interface.  
+web server is deployed with lighttpd with azure VM on port 12333.  
+
+
+
 setup:  
 ```
 # install rabbitmq on ubuntu
@@ -14,7 +22,6 @@ sudo rabbitmqctl set_permissions -p / bb ".*" ".*" ".*"
 rabbitmq-plugins enable rabbitmq_web_stomp
 
 # open azure ports in network security group
-
 ```
 
 ressources
