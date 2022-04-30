@@ -1,5 +1,5 @@
+**OPEN MULTIPLE TABS FOR MORE FUN**
 http://ml-server.westeurope.cloudapp.azure.com:12333/  
-open multiple tabs for more fun
 
 rabbitmq server is deployed on azure VM and it communicates with websockets with clien's interface.  
 web server is deployed with lighttpd with azure VM on port 12333.  
